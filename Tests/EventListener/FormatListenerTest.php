@@ -13,11 +13,11 @@ namespace FOS\RestBundle\Tests\EventListener;
 
 use FOS\RestBundle\EventListener\FormatListener;
 use FOS\RestBundle\Negotiation\FormatNegotiator;
-use Negotiation\Accept;
-use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Tests\FOSRestRequest;
 use Symfony\Component\HttpFoundation\RequestMatcher;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Negotiation\Accept;
 
 /**
  * Request listener test.
@@ -32,7 +32,7 @@ class FormatListenerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request = new Request();
+        $request = new FOSRestRequest();
 
         $event->expects($this->once())
             ->method('getRequest')
@@ -59,7 +59,7 @@ class FormatListenerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request = new Request();
+        $request = new FOSRestRequest();
         $request->setRequestFormat('xml');
 
         $requestStack = new RequestStack();
@@ -89,7 +89,7 @@ class FormatListenerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request = new Request();
+        $request = new FOSRestRequest();
 
         $event->expects($this->once())
             ->method('getRequest')
@@ -119,7 +119,7 @@ class FormatListenerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request = new Request();
+        $request = new FOSRestRequest();
         if ($format) {
             $request->setRequestFormat($format);
         }
@@ -161,7 +161,7 @@ class FormatListenerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request = new Request();
+        $request = new FOSRestRequest();
         $attributes = ['_locale' => 'en', '_format' => 'json', '_controller' => 'FooBundle:Index:featured'];
         $request->attributes->add($attributes);
         $request->attributes->set('_route_params', array_replace($request->attributes->get('_route_params', []), $attributes));

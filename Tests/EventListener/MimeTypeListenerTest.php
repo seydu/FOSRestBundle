@@ -12,7 +12,7 @@
 namespace FOS\RestBundle\Tests\EventListener;
 
 use FOS\RestBundle\EventListener\MimeTypeListener;
-use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Tests\FOSRestRequest;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
@@ -26,7 +26,7 @@ class MimeTypeListenerTest extends \PHPUnit_Framework_TestCase
     {
         $listener = new MimeTypeListener(['enabled' => true, 'formats' => ['jsonp' => ['application/javascript+jsonp']]]);
 
-        $request = new Request();
+        $request = new FOSRestRequest();
         $event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\GetResponseEvent')
             ->disableOriginalConstructor()->getMock();
         $event->expects($this->any())

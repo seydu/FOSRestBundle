@@ -11,8 +11,7 @@
 
 namespace FOS\RestBundle\Tests\EventListener;
 
-use FOS\RestBundle\View\View;
-use FOS\RestBundle\View\ViewHandler;
+use FOS\RestBundle\Tests\FOSRestRequest;
 
 /**
  * Version listener test.
@@ -25,6 +24,7 @@ class VersionListenerTest extends \PHPUnit_Framework_TestCase
      * @var \FOS\RestBundle\View\ConfigurableViewHandlerInterface
      */
     private $viewHandler;
+
     /**
      * @var \FOS\RestBundle\EventListener\VersionListener
      */
@@ -46,16 +46,8 @@ class VersionListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->listener->setRegex('/(v|version)=(?P<version>[0-9\.]+)/');
 
-        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
-
-        $attributesBag = $this->getMock('Symfony\Component\HttpFoundation\ParameterBag');
-        $attributesBag
-            ->expects($this->once())
-            ->method('get')
-            ->with('media_type')
-            ->willReturn('application/json/v=1.2');
-
-        $request->attributes = $attributesBag;
+        $request = new FOSRestRequest();
+        $request->attributes->set('media_type', 'application/json/v=1.2');
 
         $event = $this->getMock('Symfony\Component\HttpKernel\Event\GetResponseEvent', [], [], '', false);
         $event
